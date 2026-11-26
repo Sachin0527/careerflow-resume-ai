@@ -4,11 +4,13 @@ import { env } from './env.js';
 /**
  * Create a Gemini chat model instance with explicit model name and temperature.
  */
-export function createChatModel(model, temperature = 0) {
+export function createChatModel(model, temperature = 0, options = {}) {
   return new ChatGoogleGenerativeAI({
     apiKey: env.GOOGLE_API_KEY,
     model,
     temperature,
+    maxRetries: 2,
+    ...options,
   });
 }
 

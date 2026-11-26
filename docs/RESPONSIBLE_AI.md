@@ -9,8 +9,8 @@
 - **Development Assistant**: Antigravity IDE agentic coding assistant
 - **Coding / Planning Models**: <!-- [TO BE COMPLETED BY AUTHOR] e.g., Gemini 2.5 Pro / Claude Sonnet / etc. -->
 - **Runtime Application Models**:
-  - `gemini-2.5-flash` (`GEMINI_FAST_MODEL`): intent routing, resume parsing, JD requirement extraction, ATS scoring, rolling summaries, Q&A
-  - `gemini-2.5-pro` (`GEMINI_PRO_MODEL`): company-tailored rewrites, JD alignment rewrites, translation/localization, section enhancement
+  - `gemini-3-flash-preview` (`GEMINI_FAST_MODEL`): intent routing, resume parsing, JD requirement extraction, ATS scoring, rolling summaries, Q&A
+  - `gemini-3-flash-preview` (`GEMINI_PRO_MODEL`): company-tailored rewrites, JD alignment rewrites, translation/localization, section enhancement
   - `gemini-embedding-001` (`GEMINI_EMBED_MODEL`): semantic embeddings for Pinecone chunk retrieval
 - **Search Grounding**: Tavily Search (`@langchain/tavily`) for live company culture research and local CV hiring conventions
 

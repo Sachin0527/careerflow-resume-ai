@@ -25,7 +25,7 @@ export function JdPasteBlock({ content }) {
       <button
         type="button"
         onClick={() => setExpanded((prev) => !prev)}
-        className="inline-flex items-center gap-1.5 rounded-md bg-blue-700/30 px-2.5 py-1 text-xs font-medium text-white/95 transition hover:bg-blue-700/45"
+        className="inline-flex items-center gap-1.5 rounded border border-white/25 bg-black/10 px-2.5 py-1 text-xs font-medium transition-colors hover:bg-black/20 dark:border-slate-300 dark:bg-slate-100 dark:text-[#090A0D] dark:hover:bg-slate-200"
       >
         {expanded ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
         <FileText className="h-3.5 w-3.5" />
@@ -34,7 +34,7 @@ export function JdPasteBlock({ content }) {
           : `Show full text (${text.length.toLocaleString()} chars)`}
       </button>
       {expanded && (
-        <pre className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-lg bg-slate-950/25 p-3 font-mono text-xs leading-relaxed text-white/95">
+        <pre className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-md border border-black/15 bg-black/10 p-3 font-mono text-xs leading-relaxed dark:border-slate-300 dark:bg-slate-100 dark:text-slate-900">
           {text}
         </pre>
       )}

@@ -48,7 +48,7 @@ flowchart TD
     START([START]) --> loadContext
     loadContext["loadContext<br/>Fetch summary, last 8 messages,<br/>active resume JSON, activeJd/Company"] --> router
 
-    router["router (gemini-2.5-flash, temp=0)<br/>Classify intents, extract entities,<br/>build ordered plan, check preconditions"]
+    router["router (gemini-3-flash-preview, temp=0)<br/>Classify intents, extract entities,<br/>build ordered plan, check preconditions"]
 
     router -->|needsClarification OR missing resume| clarify
     router -->|undo / redo / compare| versionAction

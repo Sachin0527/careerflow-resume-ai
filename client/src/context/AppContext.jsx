@@ -30,28 +30,30 @@ export function AppProvider({ children }) {
     }
   }, []);
 
-  useEffect(() => {
+  const initializeWorkspace = useCallback(async () => {
     const clientId = getOrCreateClientId();
     dispatch({ type: 'SET_CLIENT_ID', payload: clientId });
-
-    (async () => {
-      dispatch({ type: 'LOAD_CONVERSATIONS_START' });
-      try {
-        const res = await api.listConversations(clientId);
-        const list = res.conversations || [];
-        dispatch({ type: 'LOAD_CONVERSATIONS_SUCCESS', payload: list });
-        if (list.length > 0) {
-          await loadConversation(list[0].id);
-        } else {
-          const created = await api.createConversation({ clientId });
-          dispatch({ type: 'ADD_CONVERSATION', payload: created.conversation });
-        }
-      } catch (err) {
-        dispatch({ type: 'LOAD_CONVERSATIONS_SUCCESS', payload: [] });
-        dispatch({ type: 'SET_ERROR', payload: err.message });
+    dispatch({ type: 'CLEAR_ERROR' });
+    dispatch({ type: 'LOAD_CONVERSATIONS_START' });
+    try {
+      const res = await api.listConversations(clientId);
+      const list = res.conversations || [];
+      dispatch({ type: 'LOAD_CONVERSATIONS_SUCCESS', payload: list });
+      if (list.length > 0) {
+        await loadConversation(list[0].id);
+      } else {
+        const created = await api.createConversation({ clientId });
+        dispatch({ type: 'ADD_CONVERSATION', payload: created.conversation });
       }
-    })();
+    } catch (err) {
+      dispatch({ type: 'LOAD_CONVERSATIONS_SUCCESS', payload: [] });
+      dispatch({ type: 'SET_ERROR', payload: err.message });
+    }
   }, [loadConversation]);
+
+  useEffect(() => {
+    initializeWorkspace();
+  }, [initializeWorkspace]);
 
   const handleCreateConversation = useCallback(async () => {
     if (!state.clientId) return;
@@ -290,6 +292,7 @@ export function AppProvider({ children }) {
   const value = {
     state,
     dispatch,
+    retryConnection: initializeWorkspace,
     loadConversation,
     createConversation: handleCreateConversation,
     deleteConversation: handleDeleteConversation,

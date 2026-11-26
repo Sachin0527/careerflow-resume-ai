@@ -5,43 +5,57 @@
 @layer base {
   :root {
     color-scheme: light;
-    --bg-canvas: #f8fafc;
-    --bg-surface: #ffffff;
-    --bg-subtle: #f1f5f9;
-    --border-subtle: #e2e8f0;
+    --bg-canvas: #f4f5f7;
+    --bg-panel: #ffffff;
+    --bg-bench: #e8eaef;
+    --border-hairline: #d8dde6;
     --text-primary: #0f172a;
     --text-secondary: #475569;
-    --accent: #2563eb;
   }
 
   .dark {
     color-scheme: dark;
-    --bg-canvas: #0b1120;
-    --bg-surface: #111827;
-    --bg-subtle: #1e293b;
-    --border-subtle: #1f2937;
+    --bg-canvas: #090a0d;
+    --bg-panel: #0e1015;
+    --bg-bench: #060709;
+    --border-hairline: #222631;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
-    --accent: #3b82f6;
   }
 
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Public Sans', system-ui, -apple-system, sans-serif;
     background-color: var(--bg-canvas);
     color: var(--text-primary);
     margin: 0;
+    text-underline-offset: 3px;
+  }
+
+  .dark input,
+  .dark textarea {
+    caret-color: #ffffff;
   }
 
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
   }
 
-  ::selection {
-    background-color: rgba(37, 99, 235, 0.2);
+  .dark ::selection {
+    background-color: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+  }
+
+  :not(.dark) ::selection {
+    background-color: rgba(15, 23, 42, 0.16);
+    color: #0f172a;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
   }
 }
 
-/* Custom subtle scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -51,11 +65,16 @@
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.45);
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
   border-radius: 9999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.7);
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+:not(.dark) ::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
+  border-radius: 9999px;
 }

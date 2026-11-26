@@ -16,9 +16,10 @@ export const envSchema = z.object({
   PORT: z.coerce.number().int().positive().default(3001),
   CLIENT_ORIGIN: nonEmpty('CLIENT_ORIGIN').default('http://localhost:5173'),
   GOOGLE_API_KEY: nonEmpty('GOOGLE_API_KEY'),
-  GEMINI_FAST_MODEL: nonEmpty('GEMINI_FAST_MODEL').default('gemini-2.5-flash'),
-  GEMINI_PRO_MODEL: nonEmpty('GEMINI_PRO_MODEL').default('gemini-2.5-pro'),
+  GEMINI_FAST_MODEL: nonEmpty('GEMINI_FAST_MODEL').default('gemini-3-flash-preview'),
+  GEMINI_PRO_MODEL: nonEmpty('GEMINI_PRO_MODEL').default('gemini-3-flash-preview'),
   GEMINI_EMBED_MODEL: nonEmpty('GEMINI_EMBED_MODEL').default('gemini-embedding-001'),
+  LLM_TIMEOUT_MS: z.coerce.number().int().positive().default(60000),
   PINECONE_API_KEY: nonEmpty('PINECONE_API_KEY'),
   PINECONE_INDEX: nonEmpty('PINECONE_INDEX'),
   EMBED_DIMENSION: z.coerce

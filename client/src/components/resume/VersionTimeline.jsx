@@ -23,7 +23,7 @@ export function VersionTimeline() {
 
   if (versions.length === 0) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-white p-6 text-center text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
+      <div className="rounded-lg border border-slate-200 bg-white p-6 text-center text-sm text-slate-500 dark:border-[#222631] dark:bg-[#101218] dark:text-[#94A3B8]">
         No resume versions recorded yet.
       </div>
     );
@@ -32,13 +32,13 @@ export function VersionTimeline() {
   return (
     <div className="space-y-4">
       {versions.length >= 2 && (
-        <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white p-3 text-xs dark:border-slate-800 dark:bg-slate-900">
-          <span className="font-medium text-slate-700 dark:text-slate-300">Compare:</span>
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white p-3 text-xs dark:border-[#222631] dark:bg-[#101218]">
+          <span className="font-medium text-slate-700 dark:text-[#CBD5E1]">Compare:</span>
           <select
             value={fromId}
             onChange={(e) => setFromId(e.target.value)}
             aria-label="From version"
-            className="rounded-md border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-xs dark:border-slate-700 dark:bg-slate-800"
+            className="rounded border border-slate-300 bg-slate-50 px-2 py-1 font-mono text-xs text-slate-900 dark:border-[#2A303E] dark:bg-[#171A22] dark:text-white"
           >
             {versions.map((v) => (
               <option key={v.id} value={v.id}>
@@ -46,12 +46,12 @@ export function VersionTimeline() {
               </option>
             ))}
           </select>
-          <span className="text-slate-400">→</span>
+          <span className="text-slate-500 dark:text-[#94A3B8]">→</span>
           <select
             value={toId}
             onChange={(e) => setToId(e.target.value)}
             aria-label="To version"
-            className="rounded-md border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-xs dark:border-slate-700 dark:bg-slate-800"
+            className="rounded border border-slate-300 bg-slate-50 px-2 py-1 font-mono text-xs text-slate-900 dark:border-[#2A303E] dark:bg-[#171A22] dark:text-white"
           >
             {versions.map((v) => (
               <option key={v.id} value={v.id}>
@@ -63,7 +63,7 @@ export function VersionTimeline() {
             type="button"
             disabled={!fromId || !toId || fromId === toId}
             onClick={() => compareVersions(fromId, toId)}
-            className="ml-auto inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-1 font-medium text-white transition hover:bg-blue-700 disabled:opacity-40"
+            className="ml-auto inline-flex items-center gap-1.5 rounded-md bg-slate-900 px-3 py-1 font-semibold text-white transition-colors hover:bg-slate-800 disabled:opacity-40 dark:bg-white dark:text-[#090A0D] dark:hover:bg-slate-200"
           >
             <GitCompare className="h-3.5 w-3.5" />
             Compare
@@ -75,22 +75,22 @@ export function VersionTimeline() {
         {versions.map((v) => (
           <li
             key={v.id}
-            className={`rounded-xl border p-3.5 transition ${
+            className={`rounded-lg border p-3.5 transition-colors ${
               v.isCurrent
-                ? 'border-blue-300 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/30'
-                : 'border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900'
+                ? 'border-slate-400 bg-white dark:border-white/45 dark:bg-[#14171F]'
+                : 'border-slate-200 bg-white dark:border-[#222631] dark:bg-[#101218]'
             }`}
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs font-semibold tabular-nums text-slate-800 dark:bg-slate-800 dark:text-slate-200">
+                <span className="rounded border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-xs font-semibold tabular-nums text-slate-900 dark:border-[#2A303E] dark:bg-[#1B1F2A] dark:text-white">
                   v{v.versionNumber}
                 </span>
-                <span className="text-xs font-medium text-slate-800 dark:text-slate-200">
+                <span className="text-xs font-medium text-slate-800 dark:text-[#E2E8F0]">
                   {v.createdBy}
                 </span>
                 {v.isCurrent && (
-                  <span className="rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-semibold text-white">
+                  <span className="rounded bg-slate-900 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white dark:bg-white dark:text-[#090A0D]">
                     Active
                   </span>
                 )}
@@ -100,7 +100,7 @@ export function VersionTimeline() {
                 <button
                   type="button"
                   onClick={() => restoreVersion(v.id)}
-                  className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                  className="inline-flex items-center gap-1 rounded border border-slate-300 bg-white px-2.5 py-1 text-xs font-medium text-slate-800 transition-colors hover:bg-slate-100 dark:border-[#2A303E] dark:bg-[#171A22] dark:text-white dark:hover:bg-[#222733]"
                 >
                   <RotateCcw className="h-3 w-3" />
                   Restore
@@ -109,12 +109,12 @@ export function VersionTimeline() {
             </div>
 
             {v.changeSummary && (
-              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400">
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-[#94A3B8]">
                 {v.changeSummary}
               </p>
             )}
             {v.createdAt && (
-              <p className="mt-1 font-mono text-[11px] text-slate-400 dark:text-slate-500">
+              <p className="mt-1 font-mono text-[11px] tabular-nums text-slate-500 dark:text-[#94A3B8]">
                 {new Date(v.createdAt).toLocaleString()}
               </p>
             )}

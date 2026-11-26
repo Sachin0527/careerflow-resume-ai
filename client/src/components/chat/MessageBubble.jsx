@@ -11,7 +11,7 @@ export function MessageBubble({ message }) {
   if (isUser) {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-blue-600 px-4 py-2.5 text-white">
+        <div className="max-w-[85%] rounded-lg bg-slate-900 px-4 py-2.5 text-white dark:bg-white dark:text-[#090A0D]">
           <JdPasteBlock content={message.content} />
         </div>
       </div>
@@ -21,10 +21,10 @@ export function MessageBubble({ message }) {
   return (
     <div className="flex justify-start">
       <div
-        className={`max-w-[92%] rounded-2xl rounded-bl-sm border px-4 py-3 ${
+        className={`max-w-[92%] rounded-lg border px-4 py-3 ${
           message.isError
-            ? 'border-rose-200 bg-rose-50 text-rose-900 dark:border-rose-900/70 dark:bg-rose-950/40 dark:text-rose-200'
-            : 'border-slate-200 bg-white text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100'
+            ? 'border-rose-300 bg-rose-50 text-rose-900 dark:border-rose-500/40 dark:bg-rose-950/30 dark:text-rose-200'
+            : 'border-slate-200 bg-white text-slate-800 dark:border-[#222631] dark:bg-[#101218] dark:text-[#F1F5F9]'
         }`}
       >
         {message.isError && (
@@ -37,7 +37,7 @@ export function MessageBubble({ message }) {
         <AgentTimeline steps={message.agentTrace} live={false} />
         <MatchScoreCard extras={message.matchExtras} />
 
-        <div className="prose prose-sm max-w-none text-sm leading-relaxed dark:prose-invert prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-0.5">
+        <div className="prose prose-sm max-w-[70ch] text-sm leading-relaxed dark:prose-invert prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-0.5">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content || ''}</ReactMarkdown>
         </div>
       </div>

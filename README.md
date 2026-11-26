@@ -23,8 +23,8 @@ A conversational resume optimization system where users upload a resume (PDF or 
 
 > Replace the placeholders below with captures from your local run before publishing.
 
-| Workspace (Chat + Live Resume Preview) | Side-by-Side Diff & Match Score |
-|---|---|
+| Workspace (Chat + Live Resume Preview)                            | Side-by-Side Diff & Match Score                                      |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------- |
 | ![Workspace Overview](docs/screenshots/workspace-placeholder.png) | ![Diff and Match Score](docs/screenshots/diff-match-placeholder.png) |
 
 ---
@@ -71,9 +71,10 @@ Fill in all keys in `server/.env`:
 PORT=3001
 CLIENT_ORIGIN=http://localhost:5173
 GOOGLE_API_KEY=...
-GEMINI_FAST_MODEL=gemini-2.5-flash
-GEMINI_PRO_MODEL=gemini-2.5-pro
+GEMINI_FAST_MODEL=gemini-3-flash-preview
+GEMINI_PRO_MODEL=gemini-3-flash-preview
 GEMINI_EMBED_MODEL=gemini-embedding-001
+LLM_TIMEOUT_MS=60000
 PINECONE_API_KEY=...
 PINECONE_INDEX=careerflow-resumes
 EMBED_DIMENSION=3072
@@ -84,6 +85,7 @@ FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY----
 ```
 
 Optional hardening timeouts in `server/.env`:
+
 - `LLM_TIMEOUT_MS` (default `45000`)
 - `TAVILY_TIMEOUT_MS` (default `12000`)
 
@@ -91,12 +93,12 @@ Optional hardening timeouts in `server/.env`:
 
 ## Run Commands
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Starts `/server` (`node --watch`) and `/client` (`vite`) concurrently |
-| `npm run lint` | Runs ESLint across `server/`, `client/`, and `sample/` |
-| `npm test` | Runs Vitest suite in `/server` |
-| `npm run build --workspace=client` | Builds production bundle in `/client/dist` |
+| Command                             | Description                                                                                                                                                       |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                       | Starts `/server` (`node --watch`) and `/client` (`vite`) concurrently                                                                                             |
+| `npm run lint`                      | Runs ESLint across `server/`, `client/`, and `sample/`                                                                                                            |
+| `npm test`                          | Runs Vitest suite in `/server`                                                                                                                                    |
+| `npm run build --workspace=client`  | Builds production bundle in `/client/dist`                                                                                                                        |
 | `node server/scripts/try-agents.js` | Runs all 4 agents against `sample/sample-resume.pdf` & `sample/sample-jd.txt` (uses live APIs if `server/.env` is configured, or `--mock` dry-run mode otherwise) |
 
 ---
@@ -157,23 +159,23 @@ Optional hardening timeouts in `server/.env`:
 
 ## REST & SSE API Reference (Prefix `/api`)
 
-| Method & Path | Description |
-|---|---|
-| `GET /api/health` | Health check (`{ status: "ok", timestamp, uptimeSeconds }`) |
-| `POST /api/conversations` | Create conversation (`{ clientId, title? }`) |
-| `GET /api/conversations?clientId=` | List conversations for an anonymous `clientId` |
-| `GET /api/conversations/:id` | Fetch conversation metadata, messages, current resume & undo/redo flags |
-| `PATCH /api/conversations/:id` | Rename conversation (`{ title }`) |
-| `DELETE /api/conversations/:id` | Delete conversation from Firestore & clean up Pinecone namespace |
-| `POST /api/conversations/:id/resume` | Multipart upload (`field: "file"`, PDF/DOCX, 5 MB max) -> Version 1 + Pinecone indexing |
-| `POST /api/conversations/:id/messages` | Body `{ content }` -> SSE stream (`status`, `route`, `agent_start`, `agent_step`, `agent_end`, `token`, `version`, `done`, `error`) |
-| `GET /api/conversations/:id/versions` | List version metadata (without full resume JSON) |
-| `GET /api/conversations/:id/versions/:vid` | Fetch full version document |
-| `POST /api/conversations/:id/versions/:vid/restore` | Restore a previous version non-destructively as a new version |
-| `POST /api/conversations/:id/undo` | Move version pointer backward |
-| `POST /api/conversations/:id/redo` | Move version pointer forward |
-| `GET /api/conversations/:id/compare?from=&to=` | Section-by-section structured diff between two version IDs |
-| `GET /api/conversations/:id/export?format=pdf\|docx&versionId=` | Download single-column ATS-friendly PDF or DOCX respecting `meta.language` |
+| Method & Path                                                   | Description                                                                                                                         |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `GET /api/health`                                               | Health check (`{ status: "ok", timestamp, uptimeSeconds }`)                                                                         |
+| `POST /api/conversations`                                       | Create conversation (`{ clientId, title? }`)                                                                                        |
+| `GET /api/conversations?clientId=`                              | List conversations for an anonymous `clientId`                                                                                      |
+| `GET /api/conversations/:id`                                    | Fetch conversation metadata, messages, current resume & undo/redo flags                                                             |
+| `PATCH /api/conversations/:id`                                  | Rename conversation (`{ title }`)                                                                                                   |
+| `DELETE /api/conversations/:id`                                 | Delete conversation from Firestore & clean up Pinecone namespace                                                                    |
+| `POST /api/conversations/:id/resume`                            | Multipart upload (`field: "file"`, PDF/DOCX, 5 MB max) -> Version 1 + Pinecone indexing                                             |
+| `POST /api/conversations/:id/messages`                          | Body `{ content }` -> SSE stream (`status`, `route`, `agent_start`, `agent_step`, `agent_end`, `token`, `version`, `done`, `error`) |
+| `GET /api/conversations/:id/versions`                           | List version metadata (without full resume JSON)                                                                                    |
+| `GET /api/conversations/:id/versions/:vid`                      | Fetch full version document                                                                                                         |
+| `POST /api/conversations/:id/versions/:vid/restore`             | Restore a previous version non-destructively as a new version                                                                       |
+| `POST /api/conversations/:id/undo`                              | Move version pointer backward                                                                                                       |
+| `POST /api/conversations/:id/redo`                              | Move version pointer forward                                                                                                        |
+| `GET /api/conversations/:id/compare?from=&to=`                  | Section-by-section structured diff between two version IDs                                                                          |
+| `GET /api/conversations/:id/export?format=pdf\|docx&versionId=` | Download single-column ATS-friendly PDF or DOCX respecting `meta.language`                                                          |
 
 ---
 

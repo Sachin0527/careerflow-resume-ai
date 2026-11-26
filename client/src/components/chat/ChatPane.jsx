@@ -41,23 +41,32 @@ export function ChatPane() {
   const hasResume = Boolean(state.currentResume);
 
   return (
-    <section className="flex min-w-0 flex-1 flex-col bg-slate-50/70 dark:bg-slate-950/60">
+    <section className="flex min-w-0 flex-1 flex-col bg-slate-50 dark:bg-[#090A0D]">
       <div className="flex-1 space-y-4 overflow-y-auto px-4 py-5 sm:px-6">
-        {!hasResume && !state.loadingDetail && <UploadDropzone />}
-
-        {hasResume && state.messages.length === 0 && !state.isStreaming && (
-          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-              Resume ready for optimization
-            </h2>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-              Try a suggested prompt below, paste a job description, or describe what you want to
-              tailor.
-            </p>
-            <div className="mt-3">
-              <PromptChips onSelect={handleSelectChip} disabled={state.isStreaming} />
-            </div>
+        {state.loadingDetail ? (
+          <div className="space-y-3" aria-busy="true">
+            <div className="ml-auto h-10 w-56 animate-pulse rounded-lg bg-slate-200 dark:bg-[#171A22]" />
+            <div className="h-28 w-4/5 animate-pulse rounded-lg border border-slate-200 bg-white dark:border-[#222631] dark:bg-[#101218]" />
           </div>
+        ) : (
+          <>
+            {!hasResume && <UploadDropzone />}
+
+            {hasResume && state.messages.length === 0 && !state.isStreaming && (
+              <div className="rounded-lg border border-slate-200 bg-white p-5 dark:border-[#222631] dark:bg-[#101218]">
+                <h2 className="text-sm font-semibold text-slate-900 dark:text-white">
+                  Resume ready for optimization
+                </h2>
+                <p className="mt-1 max-w-[65ch] text-sm text-slate-600 dark:text-[#94A3B8]">
+                  Select a prompt below, paste a job description, or write instructions to tailor
+                  specific sections.
+                </p>
+                <div className="mt-3.5">
+                  <PromptChips onSelect={handleSelectChip} disabled={state.isStreaming} />
+                </div>
+              </div>
+            )}
+          </>
         )}
 
         {state.messages.map((msg) => (
@@ -66,8 +75,8 @@ export function ChatPane() {
 
         {state.isStreaming && state.activeStream && (
           <div className="flex justify-start">
-            <div className="max-w-[92%] rounded-2xl rounded-bl-sm border border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-900">
-              <div className="mb-2 flex items-center gap-2 text-xs font-medium text-blue-600 dark:text-blue-400">
+            <div className="max-w-[92%] rounded-lg border border-slate-200 bg-white px-4 py-3 dark:border-[#222631] dark:bg-[#101218]">
+              <div className="mb-2 flex items-center gap-2 text-xs font-medium text-slate-900 dark:text-white">
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 <span>{state.streamStatus || 'Working...'}</span>
               </div>
@@ -76,7 +85,7 @@ export function ChatPane() {
               <MatchScoreCard extras={state.activeStream.matchExtras} />
 
               {state.activeStream.tokens && (
-                <div className="prose prose-sm max-w-none text-sm leading-relaxed dark:prose-invert">
+                <div className="prose prose-sm max-w-[70ch] text-sm leading-relaxed dark:prose-invert">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {state.activeStream.tokens}
                   </ReactMarkdown>
@@ -89,7 +98,7 @@ export function ChatPane() {
         <div ref={bottomRef} />
       </div>
 
-      <div className="border-t border-slate-200 bg-white/90 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/90 sm:px-6">
+      <div className="border-t border-slate-200 bg-white px-4 py-3 dark:border-[#222631] dark:bg-[#0E1015] sm:px-6">
         {hasResume && state.messages.length > 0 && (
           <div className="mb-2.5 overflow-x-auto pb-0.5">
             <PromptChips onSelect={handleSelectChip} disabled={state.isStreaming} />

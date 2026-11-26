@@ -1,6 +1,6 @@
 import { GatewayTimeoutError } from './errors.js';
 
-export const DEFAULT_LLM_TIMEOUT_MS = Number(process.env.LLM_TIMEOUT_MS) || 45000;
+export const DEFAULT_LLM_TIMEOUT_MS = Number(process.env.LLM_TIMEOUT_MS) || 60000;
 export const DEFAULT_TAVILY_TIMEOUT_MS = Number(process.env.TAVILY_TIMEOUT_MS) || 12000;
 export const MAX_JD_TEXT_CHARS = 15000;
 

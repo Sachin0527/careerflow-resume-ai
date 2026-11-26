@@ -21,10 +21,17 @@ export async function apiRequest(path, options = {}) {
     ...(options.headers || {}),
   };
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  });
+  let response;
+  try {
+    response = await fetch(url, {
+      ...options,
+      headers,
+    });
+  } catch {
+    throw new Error(
+      `Cannot reach the CareerFlow API (${API_BASE_URL}). Verify the backend server is running and retry.`
+    );
+  }
 
   if (!response.ok) {
     let errorMessage = `Request failed (${response.status})`;
