@@ -1,0 +1,23 @@
+Senior Backend & Platform Engineer — Google Cloud Observability
+
+Location: San Francisco, CA (Hybrid)
+
+About the Role:
+We are looking for a Senior Software Engineer to build high-throughput, low-latency distributed backend services and telemetry ingestion pipelines powering cloud observability dashboards.
+
+Required Skills & Qualifications:
+- 4+ years of production experience building backend microservices in Go or Node.js/TypeScript
+- Strong experience designing distributed systems, caching strategies (Redis), and relational databases (PostgreSQL)
+- Experience with OpenTelemetry, observability pipelines, or cloud-native telemetry (GCP or AWS)
+- Track record of improving API latency, reliability (SLOs/99.9%+ availability), and automated CI contract testing
+
+Preferred Qualifications:
+- Experience with Kubernetes, Terraform, or Apache Kafka
+- Contributions to open-source developer tooling or profiling tools
+- Experience mentoring junior engineers and leading architecture reviews
+
+Key Responsibilities:
+- Architect and scale backend APIs handling tens of thousands of requests per second with strict SLOs
+- Optimize data ingestion and query latency across distributed caches and SQL stores
+- Collaborate across frontend (React) and platform teams to ship developer-facing observability features
+- Raise engineering quality through schema validation, automated testing, and mentorship
