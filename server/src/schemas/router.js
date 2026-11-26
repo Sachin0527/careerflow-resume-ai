@@ -30,19 +30,19 @@ export const planStepSchema = z.object({
 });
 
 export const routerEntitiesSchema = z.object({
-  company: z.string().nullable().default(null),
-  targetRole: z.string().nullable().default(null),
-  language: z.string().nullable().default(null),
-  locale: z.string().nullable().default(null),
+  company: z.string().catch(null),
+  targetRole: z.string().catch(null),
+  language: z.string().catch(null),
+  locale: z.string().catch(null),
   sections: z.array(z.string()).default([]),
-  jdText: z.string().nullable().default(null),
+  jdText: z.string().catch(null),
 });
 
 export const routerOutputSchema = z.object({
   intents: z.array(routerIntentSchema).min(1),
   plan: z.array(planStepSchema).default([]),
   needsClarification: z.boolean().default(false),
-  clarificationQuestion: z.string().nullable().default(null),
+  clarificationQuestion: z.string().catch(null),
   entities: routerEntitiesSchema.default({
     company: null,
     targetRole: null,

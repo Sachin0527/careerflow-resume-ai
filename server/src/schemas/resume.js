@@ -61,8 +61,8 @@ const extraSectionSchema = z.object({
 const metaSchema = z.object({
   language: z.string().default('en'),
   locale: z.string().default('en-US'),
-  targetRole: z.string().nullable().default(null),
-  targetCompany: z.string().nullable().default(null),
+  targetRole: z.string().catch(null),
+  targetCompany: z.string().catch(null),
 });
 
 /**

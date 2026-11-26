@@ -31,7 +31,7 @@ export const companyRewriteOutputSchema = z.object({
 });
 
 export const jdExtractionSchema = z.object({
-  roleTitle: z.string().nullable().default(null),
+  roleTitle: z.string().catch(null),
   seniority: z.string().default(''),
   requiredSkills: z.array(z.string()).default([]),
   preferredSkills: z.array(z.string()).default([]),
